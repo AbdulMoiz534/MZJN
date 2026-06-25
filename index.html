@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mujhe Maaf Karna</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400;1,600&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  font-family: 'Poppins', sans-serif;
+  overflow: hidden;
+  height: 100vh;
+  width: 100vw;
+}
+
+/* ─── PAGES ─── */
+.page {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 2rem;
+  transition: opacity 0.8s ease, transform 0.8s ease;
+}
+
+#page2 {
+  opacity: 0;
+  transform: scale(0.96);
+  pointer-events: none;
+}
+
+#page2.visible {
+  opacity: 1;
+  transform: scale(1);
+  pointer-events: all;
+}
+
+#page1.hidden {
+  opacity: 0;
+  transform: scale(1.04);
+  pointer-events: none;
+}
+
+/* ─── PAGE 1 BG ─── */
+#page1 {
+  background: linear-gradient(135deg, #fff0f5 0%, #fce4ff 25%, #e8f4ff 50%, #fff8e1 75%, #ffe8f0 100%);
+}
+
+/* ─── PAGE 2 BG ─── */
+#page2 {
+  background: linear-gradient(135deg, #e8ffe8 0%, #e0f7ff 30%, #fff0fb 60%, #fffde0 100%);
+}
+
+/* ─── FLOATING FLOWERS ─── */
+.flowers-container {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.flower {
+  position: absolute;
+  animation: floatFlower linear infinite;
+  font-size: 1.6rem;
+  opacity: 0.75;
+}
+
+@keyframes floatFlower {
+  0%   { transform: translateY(110vh) rotate(0deg); opacity: 0; }
+  10%  { opacity: 0.8; }
+  90%  { opacity: 0.8; }
+  100% { transform: translateY(-10vh) rotate(360deg); opacity: 0; }
+}
+
+/* ─── SVG FLOWERS CORNERS ─── */
+.corner-flower {
+  position: absolute;
+  width: 140px;
+  height: 140px;
+  opacity: 0.6;
+}
+.corner-flower.tl { top: -10px; left: -10px; transform: rotate(0deg); }
+.corner-flower.tr { top: -10px; right: -10px; transform: rotate(90deg); }
+.corner-flower.bl { bottom: -10px; left: -10px; transform: rotate(270deg); }
+.corner-flower.br { bottom: -10px; right: -10px; transform: rotate(180deg); }
+
+/* ─── CONTENT ─── */
+.eyebrow {
+  font-size: 0.7rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: #c2607a;
+  margin-bottom: 1rem;
+  font-weight: 500;
+}
+
+.headline {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(2.8rem, 8vw, 5rem);
+  font-weight: 600;
+  line-height: 1.1;
+  color: #2a1a2e;
+  margin-bottom: 1.25rem;
+}
+
+.headline .italic { font-style: italic; color: #e0527a; }
+.headline .colored { color: #7c3fa8; }
+
+.sub {
+  font-size: 1rem;
+  line-height: 1.7;
+  color: #5a3a5a;
+  max-width: 420px;
+  margin: 0 auto 2.5rem;
+  font-weight: 300;
+}
+
+/* ─── HEART BUTTON ─── */
+.heart-btn {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 1rem 2.2rem;
+  border: none;
+  border-radius: 60px;
+  background: linear-gradient(135deg, #e8527a, #c2356a, #9b2dab);
+  color: white;
+  font-family: 'Poppins', sans-serif;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  letter-spacing: 0.03em;
+  transition: transform 0.2s, box-shadow 0.2s;
+  box-shadow: 0 8px 30px rgba(200, 60, 130, 0.35);
+}
+
+.heart-btn:hover {
+  transform: translateY(-3px) scale(1.03);
+  box-shadow: 0 12px 40px rgba(200, 60, 130, 0.5);
+}
+
+.heart-btn:active { transform: scale(0.97); }
+
+.heart-icon {
+  font-size: 1.3rem;
+  animation: heartbeat 1.4s ease-in-out infinite;
+}
+
+@keyframes heartbeat {
+  0%,100% { transform: scale(1); }
+  30% { transform: scale(1.25); }
+  60% { transform: scale(1.1); }
+}
+
+/* ─── PAGE 2 CONTENT ─── */
+.p2-title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(1.8rem, 5vw, 3rem);
+  color: #1a2e1a;
+  margin-bottom: 0.6rem;
+  line-height: 1.2;
+}
+
+.p2-title em { font-style: italic; color: #2a7a5a; }
+
+.imperfect-card {
+  background: rgba(255,255,255,0.65);
+  border: 1.5px solid rgba(255,180,210,0.5);
+  border-radius: 20px;
+  padding: 1.5rem 2rem;
+  max-width: 480px;
+  margin: 1.25rem auto;
+  backdrop-filter: blur(6px);
+}
+
+.imperfect-card p {
+  font-size: 0.9375rem;
+  line-height: 1.75;
+  color: #3a2a3a;
+  font-weight: 300;
+}
+
+.imperfect-card p strong {
+  font-weight: 600;
+  color: #7c3fa8;
+}
+
+.promise-row {
+  display: flex;
+  gap: 1rem;
+  max-width: 480px;
+  margin: 0 auto 1.5rem;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.promise-chip {
+  background: rgba(255,255,255,0.7);
+  border: 1px solid rgba(200,150,220,0.4);
+  border-radius: 40px;
+  padding: 0.45rem 1.1rem;
+  font-size: 0.8rem;
+  color: #6a2a8a;
+  font-weight: 500;
+}
+
+/* ─── BACK BUTTON ─── */
+.back-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 0.7rem 1.6rem;
+  border: 1.5px solid rgba(60, 140, 80, 0.5);
+  border-radius: 40px;
+  background: rgba(255,255,255,0.5);
+  color: #2a5a3a;
+  font-family: 'Poppins', sans-serif;
+  font-size: 0.85rem;
+  font-weight: 500;
+  cursor: pointer;
+  margin-top: 0.5rem;
+  transition: all 0.2s;
+  letter-spacing: 0.02em;
+}
+
+.back-btn:hover {
+  background: rgba(255,255,255,0.85);
+  border-color: rgba(60,140,80,0.8);
+  transform: translateY(-2px);
+}
+
+/* ─── ROSE DIVIDER ─── */
+.rose-divider {
+  font-size: 1.2rem;
+  letter-spacing: 0.5rem;
+  margin: 0.75rem 0;
+  opacity: 0.7;
+}
+
+/* ─── PETALS BURST ─── */
+.petal-burst {
+  position: absolute;
+  pointer-events: none;
+  font-size: 1.4rem;
+  animation: burstPetal 1.2s ease-out forwards;
+  z-index: 10;
+}
+
+@keyframes burstPetal {
+  0%   { opacity: 1; transform: translate(0,0) scale(1) rotate(0deg); }
+  100% { opacity: 0; transform: translate(var(--dx), var(--dy)) scale(0.4) rotate(var(--dr)); }
+}
+</style>
+</head>
+<body>
+
+<!-- ══ PAGE 1 ══ -->
+<div id="page1" class="page">
+
+  <!-- Floating flowers -->
+  <div class="flowers-container" id="flowers1"></div>
+
+  <!-- Corner decorations -->
+  <svg class="corner-flower tl" viewBox="0 0 140 140" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <ellipse cx="30" cy="30" rx="22" ry="12" fill="#ffb3cc" transform="rotate(0 30 30)"/>
+    <ellipse cx="30" cy="30" rx="22" ry="12" fill="#ffcce0" transform="rotate(60 30 30)"/>
+    <ellipse cx="30" cy="30" rx="22" ry="12" fill="#ffd6e8" transform="rotate(120 30 30)"/>
+    <circle cx="30" cy="30" r="9" fill="#ff6b9d"/>
+    <ellipse cx="75" cy="75" rx="28" ry="14" fill="#d4a8ff" transform="rotate(30 75 75)"/>
+    <ellipse cx="75" cy="75" rx="28" ry="14" fill="#e0c0ff" transform="rotate(90 75 75)"/>
+    <ellipse cx="75" cy="75" rx="28" ry="14" fill="#c88aff" transform="rotate(150 75 75)"/>
+    <circle cx="75" cy="75" r="11" fill="#9b40dd"/>
+    <ellipse cx="115" cy="25" rx="16" ry="8" fill="#ffebb3" transform="rotate(45 115 25)"/>
+    <ellipse cx="115" cy="25" rx="16" ry="8" fill="#ffe08a" transform="rotate(105 115 25)"/>
+    <circle cx="115" cy="25" r="6" fill="#ffbf00"/>
+  </svg>
+
+  <svg class="corner-flower tr" viewBox="0 0 140 140" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <ellipse cx="30" cy="30" rx="22" ry="12" fill="#ffb3cc" transform="rotate(0 30 30)"/>
+    <ellipse cx="30" cy="30" rx="22" ry="12" fill="#ffcce0" transform="rotate(60 30 30)"/>
+    <ellipse cx="30" cy="30" rx="22" ry="12" fill="#ffd6e8" transform="rotate(120 30 30)"/>
+    <circle cx="30" cy="30" r="9" fill="#ff6b9d"/>
+    <ellipse cx="75" cy="75" rx="28" ry="14" fill="#a8d4ff" transform="rotate(30 75 75)"/>
+    <ellipse cx="75" cy="75" rx="28" ry="14" fill="#b8dcff" transform="rotate(90 75 75)"/>
+    <ellipse cx="75" cy="75" rx="28" ry="14" fill="#90c8ff" transform="rotate(150 75 75)"/>
+    <circle cx="75" cy="75" r="11" fill="#2b7de9"/>
+  </svg>
+
+  <svg class="corner-flower bl" viewBox="0 0 140 140" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <ellipse cx="75" cy="75" rx="28" ry="14" fill="#b3ffdd" transform="rotate(30 75 75)"/>
+    <ellipse cx="75" cy="75" rx="28" ry="14" fill="#90ffcc" transform="rotate(90 75 75)"/>
+    <ellipse cx="75" cy="75" rx="28" ry="14" fill="#aaffe0" transform="rotate(150 75 75)"/>
+    <circle cx="75" cy="75" r="11" fill="#1aaa70"/>
+  </svg>
+
+  <svg class="corner-flower br" viewBox="0 0 140 140" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <ellipse cx="30" cy="30" rx="22" ry="12" fill="#ffe0b3" transform="rotate(0 30 30)"/>
+    <ellipse cx="30" cy="30" rx="22" ry="12" fill="#ffd0a0" transform="rotate(60 30 30)"/>
+    <ellipse cx="30" cy="30" rx="22" ry="12" fill="#ffcc99" transform="rotate(120 30 30)"/>
+    <circle cx="30" cy="30" r="9" fill="#ff8c00"/>
+    <ellipse cx="75" cy="75" rx="28" ry="14" fill="#ffb3cc" transform="rotate(30 75 75)"/>
+    <ellipse cx="75" cy="75" rx="28" ry="14" fill="#ff99bb" transform="rotate(90 75 75)"/>
+    <ellipse cx="75" cy="75" rx="28" ry="14" fill="#ff80aa" transform="rotate(150 75 75)"/>
+    <circle cx="75" cy="75" r="11" fill="#e0527a"/>
+  </svg>
+
+  <p class="eyebrow">sirf tere liye ✦</p>
+
+  <h1 class="headline">
+    Mujhe <span class="italic">maaf</span><br>
+    <span class="colored">karna</span> yaar.
+  </h1>
+
+  <div class="rose-divider">🌸 🌺 🌸</div>
+
+  <p class="sub">
+    Jo hua woh galat tha. Koi bahana nahi, koi excuse nahi —
+    bas dil se sorry. Tum mere liye bahut important ho.
+  </p>
+
+  <button class="heart-btn" id="enterBtn" onclick="goToPage2(event)">
+    <span class="heart-icon">♥</span>
+    Enter into my heart
+    <span class="heart-icon">♥</span>
+  </button>
+</div>
+
+
+<!-- ══ PAGE 2 ══ -->
+<div id="page2" class="page">
+
+  <div class="flowers-container" id="flowers2"></div>
+
+  <svg class="corner-flower tl" viewBox="0 0 140 140" fill="none">
+    <ellipse cx="60" cy="60" rx="30" ry="14" fill="#b3ffcc" transform="rotate(0 60 60)"/>
+    <ellipse cx="60" cy="60" rx="30" ry="14" fill="#99ffbb" transform="rotate(72 60 60)"/>
+    <ellipse cx="60" cy="60" rx="30" ry="14" fill="#aaffc4" transform="rotate(144 60 60)"/>
+    <ellipse cx="60" cy="60" rx="30" ry="14" fill="#bbffcc" transform="rotate(216 60 60)"/>
+    <circle cx="60" cy="60" r="12" fill="#00cc66"/>
+  </svg>
+
+  <svg class="corner-flower tr" viewBox="0 0 140 140" fill="none">
+    <ellipse cx="60" cy="60" rx="30" ry="14" fill="#ffd6ff" transform="rotate(0 60 60)"/>
+    <ellipse cx="60" cy="60" rx="30" ry="14" fill="#ffb3ff" transform="rotate(72 60 60)"/>
+    <ellipse cx="60" cy="60" rx="30" ry="14" fill="#ff99ff" transform="rotate(144 60 60)"/>
+    <ellipse cx="60" cy="60" rx="30" ry="14" fill="#ffbbff" transform="rotate(216 60 60)"/>
+    <circle cx="60" cy="60" r="12" fill="#cc00cc"/>
+  </svg>
+
+  <svg class="corner-flower bl" viewBox="0 0 140 140" fill="none">
+    <ellipse cx="60" cy="60" rx="30" ry="14" fill="#ffe0b3" transform="rotate(0 60 60)"/>
+    <ellipse cx="60" cy="60" rx="30" ry="14" fill="#ffcc99" transform="rotate(72 60 60)"/>
+    <ellipse cx="60" cy="60" rx="30" ry="14" fill="#ffd6a0" transform="rotate(144 60 60)"/>
+    <circle cx="60" cy="60" r="12" fill="#ff8c00"/>
+  </svg>
+
+  <svg class="corner-flower br" viewBox="0 0 140 140" fill="none">
+    <ellipse cx="60" cy="60" rx="30" ry="14" fill="#b3d9ff" transform="rotate(0 60 60)"/>
+    <ellipse cx="60" cy="60" rx="30" ry="14" fill="#99ccff" transform="rotate(72 60 60)"/>
+    <ellipse cx="60" cy="60" rx="30" ry="14" fill="#aad4ff" transform="rotate(144 60 60)"/>
+    <circle cx="60" cy="60" r="12" fill="#0066cc"/>
+  </svg>
+
+  <p class="eyebrow">from the heart 🌿</p>
+
+  <h2 class="p2-title">
+    I'm <em>sorry,</em> Javeria.
+  </h2>
+
+  <div class="rose-divider">🌼 🌷 🌼</div>
+
+  <div class="imperfect-card" style="overflow-y:auto;max-height:52vh;text-align:left;">
+    <p style="margin-bottom:0.9rem;">
+      I know sorry doesn't undo what happened. But I also know that staying quiet and pretending everything is fine would be worse — because you deserve honesty, not silence.
+    </p>
+    <p style="margin-bottom:0.9rem;">
+      I handled things badly. There's no other way to say it. Whatever I said or did that hurt you — it wasn't okay, and I'm not going to make excuses for it. You didn't deserve that.
+    </p>
+    <p style="margin-bottom:0.9rem;">
+      The truth is, losing you or hurting you is one of the worst feelings I know. I can't even think about not having you around — it doesn't feel right. I'm not going anywhere. I'm here, and I want to make this right.
+    </p>
+    <p style="margin-bottom:0.9rem;">
+      I'm not asking you to forget it or pretend it didn't happen. I'm just asking for a chance — to be better, to do better, to show you that you matter to me more than I sometimes manage to show.
+    </p>
+    <p style="margin-bottom:1.2rem;">
+      You are not too much. You are not the problem. <strong>I am sorry.</strong>
+    </p>
+
+    <div style="border-top:1.5px solid rgba(180,100,200,0.25);padding-top:1rem;margin-top:0.25rem;">
+      <p style="font-style:italic;font-size:0.875rem;color:#6a2a8a;line-height:1.7;">
+        "Ap ki har imperfection mujhe Ap se aur zyada connect karti hai. Jo cheezein Apko lagti hain ke kaminyan hain, woh mere liye Apki perfection hai."
+      </p>
+      <p style="margin-top:0.75rem;font-size:0.85rem;font-weight:600;color:#c2356a;letter-spacing:0.04em;">
+        — Sorry, Javeria. ♥
+      </p>
+    </div>
+  </div>
+
+  <button class="back-btn" onclick="goBack()">
+    ← Wapis Jana
+  </button>
+
+</div>
+
+<script>
+const emojis1 = ['🌸','🌺','🌼','🌹','💐','🪷','🌷','✿','❀'];
+const emojis2 = ['🌿','🍀','🌱','🌸','🌼','💚','🌺','🌻','🪻'];
+
+function spawnFlowers(containerId, emojiList) {
+  const container = document.getElementById(containerId);
+  const count = 18;
+  for (let i = 0; i < count; i++) {
+    const el = document.createElement('span');
+    el.classList.add('flower');
+    el.textContent = emojiList[Math.floor(Math.random() * emojiList.length)];
+    const left = Math.random() * 95;
+    const duration = 7 + Math.random() * 9;
+    const delay = Math.random() * 8;
+    const size = 1 + Math.random() * 0.9;
+    el.style.cssText = `left:${left}%;font-size:${size}rem;animation-duration:${duration}s;animation-delay:${delay}s;`;
+    container.appendChild(el);
+  }
+}
+
+spawnFlowers('flowers1', emojis1);
+spawnFlowers('flowers2', emojis2);
+
+function spawnBurst(x, y) {
+  const petals = ['🌸','🌺','🌼','💗','✿','🪷'];
+  for (let i = 0; i < 10; i++) {
+    const el = document.createElement('span');
+    el.className = 'petal-burst';
+    el.textContent = petals[Math.floor(Math.random() * petals.length)];
+    const angle = Math.random() * 360;
+    const dist = 60 + Math.random() * 100;
+    const rad = angle * Math.PI / 180;
+    const dx = Math.cos(rad) * dist;
+    const dy = Math.sin(rad) * dist;
+    el.style.cssText = `left:${x}px;top:${y}px;--dx:${dx}px;--dy:${dy}px;--dr:${angle}deg;`;
+    document.body.appendChild(el);
+    setTimeout(() => el.remove(), 1300);
+  }
+}
+
+function goToPage2(e) {
+  const btn = document.getElementById('enterBtn');
+  const rect = btn.getBoundingClientRect();
+  spawnBurst(rect.left + rect.width / 2, rect.top + rect.height / 2);
+  setTimeout(() => {
+    document.getElementById('page1').classList.add('hidden');
+    document.getElementById('page2').classList.add('visible');
+  }, 200);
+}
+
+function goBack() {
+  document.getElementById('page2').classList.remove('visible');
+  document.getElementById('page1').classList.remove('hidden');
+}
+</script>
+</body>
+</html>
